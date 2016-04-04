@@ -141,6 +141,7 @@
     <Content Include="Content\icons\dxicons.woff" />
     <Content Include="Content\icons\dxicons.ttf" />
     <Content Include="Content\icons\dxicons.eot" />
+    <None Include="Properties\PublishProfiles\dashboard-lb-01.pubxml" />
     <None Include="Scripts\jquery-1.11.3.intellisense.js" />
     <Content Include="Scripts\devextreme-localization\dx.webappjs.de.js" />
     <Content Include="Scripts\devextreme-localization\dx.webappjs.ja.js" />

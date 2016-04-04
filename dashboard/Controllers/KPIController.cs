@@ -22,7 +22,7 @@ namespace dashboard.Controllers
                 //this will cause the server call to ingore invailid SSL Cert - should remove for production
                 ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
 
-                string uri = @"https://proghackuc2016.osisoft.com/piwebapi/streams/A0EPUDmN4uvgkyiAt_SPv5vtg2d1umqry5RGAvwANOjKA4AmpEv6xe9ck6QJkZ0q4uKyQSlVQSVRFUjAwMVxTQU4gRElFR08gQUlSUE9SVFxIVkFDXEJPSUxFUiBST09NXEJPSUxFUiBDT05UUk9MTEVSfENQIEFIMDEgT1VUU0lERSBBSVIgREFNUEVSIFBPU0lUSU9O/interpolated";
+                string uri = @"https://proghackuc2016.osisoft.com/piwebapi/streams/A0EPUDmN4uvgkyiAt_SPv5vtgFz7Nu6ry5RGAvwANOjKA4AzXZ8VG9YKFQFQXLyhra6pASlVQSVRFUjAwMVxTQU4gRElFR08gQUlSUE9SVFxVVElMSVRJRVNcVEVSTUlOQUxTXEFJUlBPUlQgVEVSTUlOQUwgMVwzMzEyfDE1LU1JTiBFTEVDVFJJQ0lUWSBVU0FHRQ/interpolated";
                 HttpResponseMessage response = await client.GetAsync(uri);
 
                 string content = await response.Content.ReadAsStringAsync();
