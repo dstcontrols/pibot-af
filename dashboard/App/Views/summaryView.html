@@ -1,61 +1,74 @@
-﻿<div class="row">
-    <div class=" col-md-3 col-sm-6">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div>
-                    <span class="glyphicon glyphicon-stats" style="font-size: 50px; float:right;"></span>
-                    <div>Today's Production</div>
-                    <div style="font-size: 24px;">{{todayProduction}}<span style="font-size:12px;"> tons</span></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class=" col-md-3 col-sm-6">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div>
-                    <span class="glyphicon glyphicon-stats" style="font-size: 50px; float:right;"></span>
-                    <div>Yesterday's Production</div>
-                    <div style="font-size: 24px;">{{yesterdayProduction}}<span style="font-size:12px;"> tons</span></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class=" col-md-3 col-sm-6">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div>
-                    <span class="glyphicon glyphicon-stats" style="font-size: 50px; float:right;"></span>
-                    <div>Monthy Production</div>
-                    <div style="font-size: 24px;">{{monthlyProduction}}<span style="font-size:12px;"> tons</span></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class=" col-md-3 col-sm-6">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div>
-                    <span class="glyphicon glyphicon-stats" style="font-size: 50px; float:right;"></span>
-                    <div>Docked Vessels</div>
-                    <div style="font-size: 24px;">{{dockedVessels}}<span style="font-size:12px;"> class 1 ships</span></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+﻿
 
 <div class="row">
-    <div style="font-size: large;">
-        <p style="float:left; padding-left: 5px;">Production</p>
-        <p style="float:right; padding-right: 5px;">2,400 tons</p>
-        <div style="clear: both;"></div>
+    <div class="col-md-8">
+
+        <div class="row">
+            <div class=" col-md-6 col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div>
+                            <span class="glyphicon glyphicon-stats" style="font-size: 50px; float:right;"></span>
+                            <div>Today's Energy Usage</div>
+                            <div style="font-size: 24px;">{{todayProduction}}<span style="font-size:12px;"> kWh</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-6 col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div>
+                            <span class="glyphicon glyphicon-stats" style="font-size: 50px; float:right;"></span>
+                            <div>Yesterday's Energy Usage</div>
+                            <div style="font-size: 24px;">{{yesterdayProduction}}<span style="font-size:12px;"> kWh</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        <div class="row">
+            <div class=" col-md-6 col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div>
+                            <span class="glyphicon glyphicon-stats" style="font-size: 50px; float:right;"></span>
+                            <div>Monthy Energy Usage</div>
+                            <div style="font-size: 24px;">{{monthlyProduction}}<span style="font-size:12px;"> kWh</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-6 col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div>
+                            <span class="glyphicon glyphicon-stats" style="font-size: 50px; float:right;"></span>
+                            <div>Daily Total Flights</div>
+                            <div style="font-size: 24px;">{{dockedVessels}}<span style="font-size:12px;"> planes</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div style="font-size: large;">
+                <p style="float:left; padding-left: 5px;">Daily Energy Usage</p>
+                <p style="float:right; padding-right: 5px;">2,400 kWh</p>
+                <div style="clear: both;"></div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div ng-init="init()">
+                <div dx-chart="production" style="height:300px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <iframe src="https://webchat.botframework.com/embed/pibot-lb?s=J0jFTlGQdME.cwA.Z3k.S8-cMaUAajob5bTtLn943QG7vcehSzBR4fcdAqOC0yk" style="height: 502px; max-height: 502px;"></iframe>
     </div>
 </div>
 
-<div class="row">
-
-    <div ng-init="init()">
-        <div dx-chart="production" style="height:300px;"></div>
-    </div>
-</div>

@@ -26,7 +26,7 @@ angular.module('portalApp')
             type: 'bar'
         },
         series: [
-            { valueField: 'Value', name: 'ore (tons)' }
+            { valueField: 'Value', name: 'kWh' }
         ],
 
     };
