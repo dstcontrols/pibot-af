@@ -35,12 +35,15 @@ namespace Bot_Application1
                         case "builtin.datetime.time":
                             time = e.resolution.time;
                             break;
+                        case "builtin.datetime.date":
+                            time = e.resolution.date;
+                            break;
                         default:
                             break;
                     }
                 }
 
-                string uri = baseUri + string.Format("end?endTime={0}&startTime={1}", time, time);
+                string uri = baseUri + string.Format("value?time={0}", time);
 
 
                 HttpResponseMessage response = await client.GetAsync(uri);
@@ -55,10 +58,12 @@ namespace Bot_Application1
 
                 var data = JObject.Parse(content);
                 string results = element;
-                results += " energy usage ";
+                results += " Energy usage: ";
                 results += data["Value"].Value<string>() + " "+ data["UnitsAbbreviation"].Value<string>();
+                results += " "+ data["Timestamp"].Value<string>();
 
-               // "{\"Timestamp\":\"2016-04-05T04:08:05.5826686Z\",\"Value\":17.057534145410219,\"UnitsAbbreviation\":\"kWh\",\"Good\":true,\"Questionable\":false,\"Substituted\":false}"
+
+                // "{\"Timestamp\":\"2016-04-05T04:08:05.5826686Z\",\"Value\":17.057534145410219,\"UnitsAbbreviation\":\"kWh\",\"Good\":true,\"Questionable\":false,\"Substituted\":false}"
 
                 return results;
             }

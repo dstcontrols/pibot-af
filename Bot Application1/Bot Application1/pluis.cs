@@ -55,6 +55,7 @@ namespace Bot_Application1
     {
         public string comment { get; set; }
         public string time { get; set; }
+        public string date { get; set; }
     }
 
 }
