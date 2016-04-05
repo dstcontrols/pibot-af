@@ -24,7 +24,7 @@ namespace Bot_Application1
             {
                 string lroot = "https://api.projectoxford.ai/luis/v1/application?id=dd7f913b-e392-40b5-826f-2b36a09112ff&subscription-key=3f4f7cbaaf70411cafef204258c658a1&q=";
                 string uri = lroot + Uri.EscapeDataString(message.Text);
-
+                string val = "I did not understand...";
                 using (var client = new HttpClient())
                 {
                     HttpResponseMessage msg = await client.GetAsync(uri);
@@ -33,14 +33,15 @@ namespace Bot_Application1
                     {
                         var response = await msg.Content.ReadAsStringAsync();
                         var data = JsonConvert.DeserializeObject<piluis>(response);
-                        
+                        if(data.entities.Count() > 0)
+                        {
+                             val =  await PIServices.GetEnergyUsage(data);
+                        }
                     }
 
                 }
-
-
                 // return our reply to the user
-                return message.CreateReplyMessage("test");
+                return message.CreateReplyMessage(val);
             }
             else
             {

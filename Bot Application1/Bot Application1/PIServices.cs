@@ -11,7 +11,7 @@ namespace Bot_Application1
 {
     public static class PIServices
     {
-        public static async Task<string> GetEnergyUsage(string message)
+        public static async Task<string> GetEnergyUsage(piluis message)
         {
             var client = new HttpClient(new HttpClientHandler() { UseDefaultCredentials = true });
             string authInfo = Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes(String.Format("{0}:{1}", "hackuser046", "ti6djbly2A$")));
@@ -22,7 +22,27 @@ namespace Bot_Application1
                 //this will cause the server call to ingore invailid SSL Cert - should remove for production
                 ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
 
-                string uri = @"https://proghackuc2016.osisoft.com/piwebapi/streams/A0EPUDmN4uvgkyiAt_SPv5vtgFz7Nu6ry5RGAvwANOjKA4AzXZ8VG9YKFQFQXLyhra6pASlVQSVRFUjAwMVxTQU4gRElFR08gQUlSUE9SVFxVVElMSVRJRVNcVEVSTUlOQUxTXEFJUlBPUlQgVEVSTUlOQUwgMVwzMzEyfDE1LU1JTiBFTEVDVFJJQ0lUWSBVU0FHRQ/interpolated";
+                string baseUri = @"https://proghackuc2016.osisoft.com/piwebapi/streams/A0EPUDmN4uvgkyiAt_SPv5vtgFz7Nu6ry5RGAvwANOjKA4AzXZ8VG9YKFQFQXLyhra6pASlVQSVRFUjAwMVxTQU4gRElFR08gQUlSUE9SVFxVVElMSVRJRVNcVEVSTUlOQUxTXEFJUlBPUlQgVEVSTUlOQUwgMVwzMzEyfDE1LU1JTiBFTEVDVFJJQ0lUWSBVU0FHRQ/";
+                string time = "*";
+                string element = "";
+                foreach (var e in message.entities)
+                {
+                    switch (e.type)
+                    {
+                        case "DataSource":
+                            element = e.entity;
+                            break;
+                        case "builtin.datetime.time":
+                            time = e.resolution.time;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                string uri = baseUri + string.Format("end?endTime={0}&startTime={1}", time, time);
+
+
                 HttpResponseMessage response = await client.GetAsync(uri);
 
                 string content = await response.Content.ReadAsStringAsync();
@@ -33,20 +53,14 @@ namespace Bot_Application1
                     throw new HttpRequestException(responseMessage + Environment.NewLine + content);
                 }
 
-                var data = (JArray)JObject.Parse(content)["Items"];
-                var result = new JArray();
-                foreach (var item in data)
-                {
-                    if (item["Good"].Value<bool>())
-                    {
-                        var dataPair = new JObject();
-                        dataPair.Add("Timestamp", item["Timestamp"].Value<string>());
-                        dataPair.Add("Value", item["Value"].Value<double>());
-                        result.Add(dataPair);
-                    }
-                }
+                var data = JObject.Parse(content);
+                string results = element;
+                results += " energy usage ";
+                results += data["Value"].Value<string>() + " "+ data["UnitsAbbreviation"].Value<string>();
 
-                return "test";
+               // "{\"Timestamp\":\"2016-04-05T04:08:05.5826686Z\",\"Value\":17.057534145410219,\"UnitsAbbreviation\":\"kWh\",\"Good\":true,\"Questionable\":false,\"Substituted\":false}"
+
+                return results;
             }
             catch (Exception e)
             {
