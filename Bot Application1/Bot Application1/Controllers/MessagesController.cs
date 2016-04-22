@@ -14,40 +14,53 @@ namespace Bot_Application1
     [BotAuthentication]
     public class MessagesController : ApiController
     {
+        private static string userName = "hackuser046";
+        private static string password = "ti6djbly2A$";
+        private static string serverUrl = @"https://proghackuc2016.osisoft.com/piwebapi";
+        private static string baseElement = @"\\JUPITER001\San Diego Airport\Utilities\Terminals";
         /// <summary>
         /// POST: api/Messages
         /// Receive a message from a user and reply to it
         /// </summary>
-        public async Task<Message> Post([FromBody]Message message)
+public async Task<Message> Post([FromBody]Message message)
+{
+    if (message.Type == "Message")
+    {
+        // Lonnie's Bot
+        string appId = @"9c1d7df5-92be-4ade-ab29-7affaa91b797";
+        string subKey = @"d1a9a95fc7b5400cb7996db63ed26f66";
+        // Lisa's Bot
+        //string appId = @"dd7f913b-e392-40b5-826f-2b36a09112ff";
+        //string subKey = @"3f4f7cbaaf70411cafef204258c658a1";
+
+        string lroot = @"https://api.projectoxford.ai/luis/v1/application?id=" + appId + "&subscription-key=" + subKey + "&q=";
+
+        string uri = lroot + Uri.EscapeDataString(message.Text);
+        string val = "I did not understand...";
+        using (var client = new HttpClient())
         {
-            if (message.Type == "Message")
+            HttpResponseMessage msg = await client.GetAsync(uri);
+
+            if (msg.IsSuccessStatusCode)
             {
-                string lroot = "https://api.projectoxford.ai/luis/v1/application?id=dd7f913b-e392-40b5-826f-2b36a09112ff&subscription-key=3f4f7cbaaf70411cafef204258c658a1&q=";
-                string uri = lroot + Uri.EscapeDataString(message.Text);
-                string val = "I did not understand...";
-                using (var client = new HttpClient())
+                var response = await msg.Content.ReadAsStringAsync();
+                var data = JsonConvert.DeserializeObject<piluis>(response);
+                if(data.intents[0].intent == "GetKPI")
                 {
-                    HttpResponseMessage msg = await client.GetAsync(uri);
-
-                    if (msg.IsSuccessStatusCode)
-                    {
-                        var response = await msg.Content.ReadAsStringAsync();
-                        var data = JsonConvert.DeserializeObject<piluis>(response);
-                        if(data.entities.Count() > 0)
-                        {
-                             val =  await PIServices.GetEnergyUsage(data);
-                        }
-                    }
-
+                    var piService = new PIServices(serverUrl, baseElement, userName, password);
+                    val =  await piService.GetKPI(data);
                 }
-                // return our reply to the user
-                return message.CreateReplyMessage(val);
             }
-            else
-            {
-                return HandleSystemMessage(message);
-            }
+
         }
+        // return our reply to the user
+        return message.CreateReplyMessage(val);
+    }
+    else
+    {
+        return HandleSystemMessage(message);
+    }
+}
 
         private Message HandleSystemMessage(Message message)
         {

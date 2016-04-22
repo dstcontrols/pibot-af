@@ -101,11 +101,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\LUISParse.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="PIServices.cs" />
+    <Compile Include="PIWebAPIClient.cs" />
     <Compile Include="pluis.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
